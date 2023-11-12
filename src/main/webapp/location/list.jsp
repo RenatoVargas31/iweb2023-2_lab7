@@ -1,7 +1,7 @@
 <%@ page import="com.example.webapphr1_2023.Beans.Location" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<jsp:useBean type="java.util.ArrayList<com.example.webapphr1_2023.Beans.Location>" scope="request" id="locationList"/>
+<jsp:useBean type="java.util.ArrayList<com.example.webapphr1_2023.Beans.Location>" scope="request" id="listaLocation"/>
 
 <!DOCTYPE html>
 <html>
@@ -33,20 +33,30 @@
             <th></th>
         </tr>
         <%
-            for (Location loc : locationList) {
+            for (Location loc : listaLocation) {
         %>
         <tr>
             <td><%=loc.getLocationId()%>
             </td>
-            <td><%=loc.getLocationId()%>
+            <td><%=loc.getStreetAddress()%>
             </td>
-            <td><%=loc.getLocationId()%>
+            <td><%=loc.getPostalCode()%>
             </td>
-            <td><%=loc.getLocationId()%>
+            <td><%=loc.getCity()%>
             </td>
-            <td><%=loc.getLocationId()%>
+            <%if (loc.getStateProvince() != null){
+            %>
+            <td>
+                <%=loc.getStateProvince()%>
             </td>
-            <td><%=loc.getLocationId()%>
+            <%}else{
+            %>
+            <td>
+                No se registra
+            </td>
+            <%}
+            %>
+            <td><%=loc.getCountry().getCountryName()%>
             </td>
             <td>
                 <a class="btn btn-primary"

@@ -1,5 +1,6 @@
 package com.example.webapphr1_2023.Controllers;
 
+import com.example.webapphr1_2023.Beans.Employee;
 import com.example.webapphr1_2023.Beans.Location;
 import com.example.webapphr1_2023.Daos.LocationDao;
 import jakarta.servlet.RequestDispatcher;
@@ -16,19 +17,80 @@ import java.util.ArrayList;
 public class LocationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action") == null? "no" : req.getParameter("action");
+        String action = req.getParameter("action") == null ? "listar" : req.getParameter("action");
+
+        RequestDispatcher view;
 
         switch(action){
             case "listar":
 
                 LocationDao locationdao = new LocationDao();
                 ArrayList<Location> listaLocation=locationdao.listarLocation();
-                
+                req.setAttribute("listaLocation", listaLocation);
+                view = req.getRequestDispatcher("location/list.jsp");
+                view.forward(req, resp);
+                break;
+
+            case "agregar":
+                req.setAttribute("listaTrabajos",jobDao.obtenerListaTrabajos());
+                req.setAttribute("listaJefes",employeeDao.listarEmpleados());
+                req.setAttribute("listaDepartamentos",departmentDao.lista());
+                view = req.getRequestDispatcher("employees/formularioNuevo.jsp");
+                view.forward(req, resp);
+                break;
+            case "editar":
+                if (req.getParameter("id") != null) {
+                    String employeeIdString = req.getParameter("id");
+                    int employeeId = 0;
+                    try {
+                        employeeId = Integer.parseInt(employeeIdString);
+                    } catch (NumberFormatException ex) {
+                        resp.sendRedirect("EmployeeServlet");
+
+                    }
+
+                    Employee emp = employeeDao.obtenerEmpleado(employeeId);
+
+                    if (emp != null) {
+                        req.setAttribute("empleado", emp);
+                        req.setAttribute("listaTrabajos",jobDao.obtenerListaTrabajos());
+                        req.setAttribute("listaJefes",employeeDao.listarEmpleados());
+                        req.setAttribute("listaDepartamentos",departmentDao.lista());
+                        view = req.getRequestDispatcher("employees/formularioEditar.jsp");
+                        view.forward(req, resp);
+                    } else {
+                        resp.sendRedirect("EmployeeServlet");
+                    }
+
+                } else {
+                    resp.sendRedirect("EmployeeServlet");
+                }
+
+                break;
+            case "borrar":
+                if (req.getParameter("id") != null) {
+                    String employeeIdString = req.getParameter("id");
+                    int employeeId = 0;
+                    try {
+                        employeeId = Integer.parseInt(employeeIdString);
+                    } catch (NumberFormatException ex) {
+                        resp.sendRedirect("EmployeeServlet");
+                    }
+
+                    Employee emp = employeeDao.obtenerEmpleado(employeeId);
+
+                    if (emp != null) {
+                        employeeDao.borrarEmpleado(employeeId);
+                    }
+                }
+
+                resp.sendRedirect("EmployeeServlet");
+                break;
+
 
 
         }
-        RequestDispatcher view;
-        req.setAttribute("locationList", new ArrayList<>());
+        //req.setAttribute("locationList", new ArrayList<>());
         view = req.getRequestDispatcher("location/list.jsp");
         view.forward(req, resp);
     }
