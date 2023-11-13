@@ -4,11 +4,11 @@
 <html>
     <head>
         <jsp:include page="../includes/bootstrap_header.jsp" />
-        <title>Editar un trabajo</title>
+        <title>Editar una Locacion</title>
     </head>
     <body>
         <div class='container'>
-            <h1 class='mb-3'>Editar un trabajo</h1>
+            <h1 class='mb-3'>Editar una locacion</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>">Home</a></li>
@@ -16,7 +16,7 @@
                 </ol>
             </nav>
 
-            <form method="POST" action="<%=request.getContextPath()%>/JobServlet?action=crear" class="col-md-6 col-lg-6">
+            <form method="POST" action="<%=request.getContextPath()%>/LocationServlet?action=crear" class="col-md-6 col-lg-6">
                 <input type="hidden" class="form-control" name="jobId" value="<%=trabajo.getJobId()%>">
                 <div class="mb-3">
                     <label for="jobTitle">Job Title</label>

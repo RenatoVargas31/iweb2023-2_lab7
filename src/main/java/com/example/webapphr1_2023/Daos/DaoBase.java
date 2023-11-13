@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public abstract class DaoBase {
 
-    public Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {

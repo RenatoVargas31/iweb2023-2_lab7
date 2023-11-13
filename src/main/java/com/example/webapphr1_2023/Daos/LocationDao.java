@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class LocationDao extends DaoBase{
 
-    public ArrayList<Location> listarLocation() {
+    public static ArrayList<Location> listarLocation() {
 
         ArrayList<Location> listaLocation = new ArrayList<>();
 

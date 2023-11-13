@@ -25,67 +25,13 @@ public class LocationServlet extends HttpServlet {
             case "listar":
 
                 LocationDao locationdao = new LocationDao();
-                ArrayList<Location> listaLocation=locationdao.listarLocation();
+                ArrayList<Location> listaLocation= locationdao.listarLocation();
                 req.setAttribute("listaLocation", listaLocation);
                 view = req.getRequestDispatcher("location/list.jsp");
                 view.forward(req, resp);
                 break;
 
-            case "agregar":
-                req.setAttribute("listaTrabajos",jobDao.obtenerListaTrabajos());
-                req.setAttribute("listaJefes",employeeDao.listarEmpleados());
-                req.setAttribute("listaDepartamentos",departmentDao.lista());
-                view = req.getRequestDispatcher("employees/formularioNuevo.jsp");
-                view.forward(req, resp);
-                break;
-            case "editar":
-                if (req.getParameter("id") != null) {
-                    String employeeIdString = req.getParameter("id");
-                    int employeeId = 0;
-                    try {
-                        employeeId = Integer.parseInt(employeeIdString);
-                    } catch (NumberFormatException ex) {
-                        resp.sendRedirect("EmployeeServlet");
 
-                    }
-
-                    Employee emp = employeeDao.obtenerEmpleado(employeeId);
-
-                    if (emp != null) {
-                        req.setAttribute("empleado", emp);
-                        req.setAttribute("listaTrabajos",jobDao.obtenerListaTrabajos());
-                        req.setAttribute("listaJefes",employeeDao.listarEmpleados());
-                        req.setAttribute("listaDepartamentos",departmentDao.lista());
-                        view = req.getRequestDispatcher("employees/formularioEditar.jsp");
-                        view.forward(req, resp);
-                    } else {
-                        resp.sendRedirect("EmployeeServlet");
-                    }
-
-                } else {
-                    resp.sendRedirect("EmployeeServlet");
-                }
-
-                break;
-            case "borrar":
-                if (req.getParameter("id") != null) {
-                    String employeeIdString = req.getParameter("id");
-                    int employeeId = 0;
-                    try {
-                        employeeId = Integer.parseInt(employeeIdString);
-                    } catch (NumberFormatException ex) {
-                        resp.sendRedirect("EmployeeServlet");
-                    }
-
-                    Employee emp = employeeDao.obtenerEmpleado(employeeId);
-
-                    if (emp != null) {
-                        employeeDao.borrarEmpleado(employeeId);
-                    }
-                }
-
-                resp.sendRedirect("EmployeeServlet");
-                break;
 
 
 
