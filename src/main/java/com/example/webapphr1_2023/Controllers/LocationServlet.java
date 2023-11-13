@@ -25,15 +25,34 @@ public class LocationServlet extends HttpServlet {
             case "listar":
 
                 LocationDao locationdao = new LocationDao();
-                ArrayList<Location> listaLocation= locationdao.listarLocation();
+                ArrayList<Location> listaLocation=locationdao.listarLocation();
                 req.setAttribute("listaLocation", listaLocation);
                 view = req.getRequestDispatcher("location/list.jsp");
                 view.forward(req, resp);
                 break;
+            case "crear":
+                view = req.getRequestDispatcher("location/nuevaLocation.jsp");
+                view.forward(req, resp);
+                break;
 
+            case "editar":
+                if (req.getParameter("id") != null) {
+                    int locationId = Integer.parseInt(req.getParameter("id"));
+                    Location location = locationdao.obtenerLocation(locationId);
 
-
-
+                    if (location != null) {
+                        // Lógica para cargar datos necesarios si es necesario
+                        // Por ejemplo, listas de países, regiones, etc.
+                        req.setAttribute("location", location);
+                        view = req.getRequestDispatcher("location/editarLocation.jsp");
+                        view.forward(req, resp);
+                    } else {
+                        resp.sendRedirect("LocationServlet?action=listar");
+                    }
+                } else {
+                    resp.sendRedirect("LocationServlet?action=listar");
+                }
+                break;
 
         }
         //req.setAttribute("locationList", new ArrayList<>());

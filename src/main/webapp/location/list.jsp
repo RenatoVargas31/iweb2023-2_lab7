@@ -73,6 +73,30 @@
         </tr>
         <%
             }
+            <!-- Agregamos un formulario para la creación de una nueva Location -->
+            <form action="<%=request.getContextPath()%>/LocationServlet" method="GET">
+        <input type="hidden" name="action" value="crear">
+        <button type="submit" class="btn btn-primary mb-3">Crear Location</button>
+        </form>
+
+        <table class="table">
+            <!-- Resto del código existente -->
+
+            <% for (Location loc : listaLocation) { %>
+            <!-- Resto del código existente -->
+            <td>
+                <a class="btn btn-primary" href="<%=request.getContextPath()%>/LocationServlet?action=editar&id=<%=loc.getLocationId()%>">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-danger" href="<%=request.getContextPath()%>/LocationServlet?action=borrar&id=<%=loc.getLocationId()%>">
+                    <i class="bi bi-trash3"></i>
+                </a>
+            </td>
+            <% } %>
+        </table>
+
         %>
     </table>
 </div>
